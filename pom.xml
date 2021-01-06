@@ -18,7 +18,7 @@
 		<start-class>org.acme.graph.Application</start-class>
 		<!-- versions des autres dépendances -->
 		<geotools.version>24.1</geotools.version>
-		<jacoco.version>0.8.5</jacoco.version>
+		<jacoco.version>0.8.6</jacoco.version>
 	</properties>
 
 	<parent>
