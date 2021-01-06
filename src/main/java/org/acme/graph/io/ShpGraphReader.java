@@ -37,17 +37,19 @@ public class ShpGraphReader {
 	 */
 	public static Graph read(File file) throws Exception {
 		Graph graph = new Graph();
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("url", file.toURI().toURL());
 
-		DataStore dataStore = DataStoreFinder.getDataStore(map);
-		String typeName = dataStore.getTypeNames()[0];
+		DataStore dataStore = null;
+		FeatureIterator<SimpleFeature> features = null;
+		try {
+			dataStore = DataStoreFinder.getDataStore(map);
+			String typeName = dataStore.getTypeNames()[0];
+			FeatureSource<SimpleFeatureType, SimpleFeature> dataSource = dataStore.getFeatureSource(typeName);
+			FeatureCollection<SimpleFeatureType, SimpleFeature> collection = dataSource.getFeatures(Filter.INCLUDE);
 
-		FeatureSource<SimpleFeatureType, SimpleFeature> dataSource = dataStore.getFeatureSource(typeName);
-		Filter filter = Filter.INCLUDE;
-
-		FeatureCollection<SimpleFeatureType, SimpleFeature> collection = dataSource.getFeatures(filter);
-		try (FeatureIterator<SimpleFeature> features = collection.features()) {
+			features = collection.features();
 			while (features.hasNext()) {
 				SimpleFeature feature = features.next();
 
@@ -73,7 +75,15 @@ public class ShpGraphReader {
 				reverseEdge.setTarget(source);
 				graph.getEdges().add(reverseEdge);
 			}
+		}finally {
+		    if ( features != null ){
+		        features.close();
+		    }
+		    if ( dataStore != null ) {
+		    	dataStore.dispose();
+		    }
 		}
+
 		return graph;
 	}
 
