@@ -12,15 +12,21 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- spring-boot - version java (suffisant, c.f. https://www.baeldung.com/maven-java-version) -->
 		<java.version>11</java.version>
+		<!-- spring-boot - main du jar (c.f. https://www.baeldung.com/spring-boot-main-class) -->
+		<start-class>org.acme.graph.Application</start-class>
+		<!-- versions des autres dépendances -->
 		<geotools.version>24.1</geotools.version>
+		<jacoco.version>0.8.5</jacoco.version>
 	</properties>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>2.4.1</version>
+		<!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 
 	<dependencies>
@@ -97,23 +103,6 @@
 
 	<build>
 		<plugins>
-			<!-- TODO start-class https://www.baeldung.com/spring-boot-main-class -->
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>org.acme.graph.Application</mainClass>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -152,7 +141,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
+				<version>${jacoco.version}</version>
 				<executions>
 					<execution>
 						<id>default-prepare-agent</id>
