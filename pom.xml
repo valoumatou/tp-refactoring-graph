@@ -13,7 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>11</java.version>
-		<geotools.version>19.3</geotools.version>
+		<geotools.version>24.1</geotools.version>
 	</properties>
 
 	<parent>
@@ -44,12 +44,6 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-shapefile</artifactId>
 			<version>${geotools.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.vividsolutions</groupId>
-			<artifactId>jts-core</artifactId>
-			<version>1.14.0</version>
 		</dependency>
 
 		<dependency>
@@ -103,6 +97,7 @@
 
 	<build>
 		<plugins>
+			<!-- TODO start-class https://www.baeldung.com/spring-boot-main-class -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -145,7 +140,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>3.0.0-M4</version>
 				<executions>
 					<execution>
 						<goals>
