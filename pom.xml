@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.acme</groupId>
@@ -26,7 +27,7 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.4.1</version>
 		<!-- lookup parent from repository -->
-		<relativePath/>
+		<relativePath />
 	</parent>
 
 	<dependencies>
@@ -35,11 +36,8 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!--
-		Pour simplifier l'accès aux resources dans le jar
-		https://stackoverflow.com/a/37202883
-		https://github.com/ulisesbocchio/spring-boot-jar-resources
-		 -->
+		<!-- Pour simplifier l'accès aux resources dans le jar https://stackoverflow.com/a/37202883 
+			https://github.com/ulisesbocchio/spring-boot-jar-resources -->
 		<dependency>
 			<groupId>com.github.ulisesbocchio</groupId>
 			<artifactId>spring-boot-jar-resources</artifactId>

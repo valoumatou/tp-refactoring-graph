@@ -23,8 +23,8 @@ public class ShpGraphReaderTest {
 
 	private File getResourceFile(String name) {
 		URL url = getClass().getResource(name);
-		Assert.assertNotNull("resource not found : "+name, url);
-		File file = new File(url.getPath()) ;
+		Assert.assertNotNull("resource not found : " + name, url);
+		File file = new File(url.getPath());
 		return file;
 	}
 
@@ -32,25 +32,24 @@ public class ShpGraphReaderTest {
 	public void testRoute500() throws Exception {
 		File file = getResourceFile("/route500/idf/troncon_route.shp");
 		Assert.assertTrue(file.exists());
-		
+
 		Graph graph = ShpGraphReader.read(file);
-		for ( Vertex vertex : graph.getVertices() ) {
+		for (Vertex vertex : graph.getVertices()) {
 			assertNotNull(vertex.getId());
 			assertNotNull(vertex.getCoordinate());
 		}
-		
-		for ( Edge edge : graph.getEdges() ) {
+
+		for (Edge edge : graph.getEdges()) {
 			assertNotNull(edge.getId());
 			assertNotNull(edge.getSource());
-			assertNotNull(edge.getTarget());			
+			assertNotNull(edge.getTarget());
 		}
-		
-		assertEquals(19207,graph.getVertices().size());
-		assertEquals(49536,graph.getEdges().size());
-		
-		
+
+		assertEquals(19207, graph.getVertices().size());
+		assertEquals(49536, graph.getEdges().size());
+
 		Vertex vertex1 = graph.findVertex("1");
 		assertNotNull(vertex1);
 	}
-	
+
 }

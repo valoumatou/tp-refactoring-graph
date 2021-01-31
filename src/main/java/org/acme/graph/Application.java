@@ -22,17 +22,15 @@ public class Application {
 	 */
 	public static void main(String[] args) {
 		/*
-		 * Démarrage classique d'une application spring modifié pour faciliter le
-		 * chargement des ressources à partir du jar
-		 */
-		// SpringApplication.run(Application.class, args);
-
-		/*
-		 * Permet d'accéder facilement aux resources en mode jar
+		 * Permet d'accéder facilement aux resources en mode jar.
 		 * 
 		 * @see https://stackoverflow.com/a/37202883
 		 */
-		new SpringApplicationBuilder().sources(Application.class).resourceLoader(new JarResourceLoader()).run(args);
+		new SpringApplicationBuilder()
+			.sources(Application.class)
+			.resourceLoader(new JarResourceLoader())
+			.run(args)
+		;
 	}
 
 }
