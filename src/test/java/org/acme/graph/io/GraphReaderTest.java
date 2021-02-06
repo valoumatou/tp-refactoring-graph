@@ -10,6 +10,7 @@ import org.acme.graph.model.Edge;
 import org.acme.graph.model.Graph;
 import org.acme.graph.model.Vertex;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -19,10 +20,23 @@ import org.junit.Test;
  * @author MBorne
  *
  */
-public class ShpGraphReaderTest {
+public class GraphReaderTest {
 
+	private GraphReader reader;
+
+	@Before
+	public void setUp() {
+		this.reader = new GraphReader();
+	}
+
+	/**
+	 * Récupération d'une ressource à partir de src/main/resources
+	 * 
+	 * @param name
+	 * @return
+	 */
 	private File getResourceFile(String name) {
-		URL url = getClass().getResource(name);
+		URL url = GraphReader.class.getResource(name);
 		Assert.assertNotNull("resource not found : " + name, url);
 		File file = new File(url.getPath());
 		return file;
@@ -33,7 +47,7 @@ public class ShpGraphReaderTest {
 		File file = getResourceFile("/route500/idf/troncon_route.shp");
 		Assert.assertTrue(file.exists());
 
-		Graph graph = ShpGraphReader.read(file);
+		Graph graph = reader.read(file);
 		for (Vertex vertex : graph.getVertices()) {
 			assertNotNull(vertex.getId());
 			assertNotNull(vertex.getCoordinate());
@@ -48,8 +62,20 @@ public class ShpGraphReaderTest {
 		assertEquals(19207, graph.getVertices().size());
 		assertEquals(49536, graph.getEdges().size());
 
-		Vertex vertex1 = graph.findVertex("1");
-		assertNotNull(vertex1);
+		{
+			Vertex v = graph.findVertex("1");
+			assertNotNull(v);
+			assertEquals("1", v.getId());
+			assertEquals(3, graph.getOutEdges(v).size());
+			assertEquals(3, graph.getInEdges(v).size());
+		}
+		{
+			Vertex v = graph.findVertex("2");
+			assertNotNull(v);
+			assertEquals("2", v.getId());
+			assertEquals(2, graph.getOutEdges(v).size());
+			assertEquals(2, graph.getInEdges(v).size());
+		}
 	}
 
 }

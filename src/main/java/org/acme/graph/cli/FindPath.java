@@ -8,6 +8,8 @@ import org.acme.graph.model.Edge;
 import org.acme.graph.model.Graph;
 import org.acme.graph.model.Vertex;
 import org.acme.graph.routing.DijkstraPathFinder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * 
@@ -18,40 +20,52 @@ import org.acme.graph.routing.DijkstraPathFinder;
  *
  */
 public class FindPath {
+
+	private static final Logger log = LogManager.getLogger(FindPath.class);
+
 	public static void main(String[] args) throws Exception {
 		if (args.length != 3) {
-			System.out.println("Usage : <path> <source> <target>");
-			System.out.println("Vous pouvez configurer eclipse avec l'une des options suivante :");
-			System.out.println("${project_loc}/src/test/resources/graph/01.xml a c");
-			System.out.println("${project_loc}/src/test/resources/route500/idf/troncon_route.shp 1 1000");
+			System.err.println("Usage : <graph.path> <source> <target>");
+			System.err.println("Vous pouvez configurer eclipse avec l'option suivante dans 'Program arguments' :");
+			System.err.println("${project_loc}/src/main/resources/route500/idf/troncon_route.shp 1 9557");
 			System.exit(1);
 		}
-		// Chargement du graph...
+		/* Récupération des paramètres */
 		File graphFile = new File(args[0]);
 		if (!graphFile.exists()) {
-			System.err.println("file not found : " + graphFile.getAbsolutePath());
+			log.fatal("graph file not found : {}", graphFile.getAbsolutePath());
+			System.exit(1);
 		}
-		Graph graph = GraphReader.read(graphFile);
+		String originId = args[1];
+		String destinationId = args[2];
 
-		// Récupération source et target
-		Vertex source = graph.findVertex(args[1]);
+		/* Chargement du graphe */
+		GraphReader reader = new GraphReader();
+		log.info("Loading graph from {}...", graphFile.getAbsolutePath());
+		Graph graph = reader.read(graphFile);
+		log.info("Graph loaded (num_vertices={}, num_edges={})", graph.getVertices().size(), graph.getEdges().size());
+
+		Vertex source = graph.findVertex(originId);
 		if (source == null) {
-			System.err.println("vertex " + args[1] + " not found");
+			log.error("origin vertex '{}' not found!", originId);
+			System.exit(1);
 		}
-		Vertex target = graph.findVertex(args[2]);
+		Vertex target = graph.findVertex(destinationId);
 		if (target == null) {
-			System.err.println("vertex " + args[2] + " not found");
+			log.error("destination vertex '{}' not found!", destinationId);
+			System.exit(1);
 		}
 
 		DijkstraPathFinder pathFinder = new DijkstraPathFinder(graph);
 		List<Edge> pathEdges = pathFinder.findPath(source, target);
 		if (pathEdges == null) {
-			System.err.println("path not found");
+			log.info("Path not not found from {} to {}", originId, destinationId);
 			return;
 		}
-		System.out.println("Chemin trouvé : ");
+
+		log.info("Path not found from {} to {} with {} edge(s)", originId, destinationId, pathEdges.size());
 		for (Edge pathEdge : pathEdges) {
-			System.out.println(pathEdge.getSource().getId() + " -> " + pathEdge.getTarget().getId());
+			log.debug("{} -> {}", pathEdge.getSource().getId(), pathEdge.getTarget().getId());
 		}
 	}
 }

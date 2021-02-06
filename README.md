@@ -26,19 +26,20 @@ Le code est organisé en package :
 * `controllers` : Contrôleurs de l'application springboot
 * `config` : Configuration de l'application springboot (initialisation des beans)
 
-## Remarque
-
-Un extrait de [ROUTE500](http://professionnels.ign.fr/route500) est présent dans `src/test/resources/idf/troncon_route.shp` à des fins de tests.
-
 ## Utilisation
 
-### En mode ligne CLI
+### Calcul de chemin en ligne de commande
 
-Lancer l'application `cli.FindPath` dans eclipse.
+Lancer l'application "cli/FindPath.java" dans eclipse. Un message d'aide vous guidera pour configurer le point de départ et d'arrivée.
 
-### En mode API
+### Démarrage de l'API avec eclipse
 
-1) Construire le jar :
+* Lancer l'application "Application.java".
+* Ouvrir http://localhost:8080/find-path?origin=1&destination=9557
+
+### Démarrage de l'API en ligne de commande
+
+1) Construire le jar
 
 ```bash
 mvn clean package
@@ -47,23 +48,21 @@ mvn clean package
 2) Démarrer l'API
 
 ```bash
-# Option 1 : Charger le graphe de démonstration
+# Démarrer l'API avec le graphe ROUTE500 de démonstration
 java -cp target -jar target/tp-refactoring-graph-0.1.0-SNAPSHOT.jar
-# -> ouvrir http://localhost:8080/find-path?origin=a&destination=c
-
-# Option 2 : Charger l'extrait ROUTE500
-java -Dgraph.path=src/test/resources/route500/idf/troncon_route.shp -jar target/tp-refactoring-graph-0.1.0-SNAPSHOT.jar
-# -> Ouvrir http://localhost:8080/find-path?origin=1&destination=1000
+# Tester l'API :
+curl "http://localhost:8080/find-path?origin=1&destination=9557"
 ```
 
+Remarque :
 
-### En mode API sous eclipse
-
-Lancer "Application.java" par exemple avec les paramètres suivant dans "VM Arguments" :
+* Un extrait de [ROUTE500](http://professionnels.ign.fr/route500) est présent dans `src/main/resources/route500/idf/troncon_route.shp` à des fins de tests. Il est intégré dans le jar et est chargé par défaut
+* Il est possible de charger un autre fichier à l'aide de l'option `graph.path` :
 
 ```bash
--Dgraph.path=${project_loc}/src/test/resources/route500/idf/troncon_route.shp
+java -Dgraph.path=path/to/troncon_route.shp -jar target/tp-refactoring-graph-0.1.0-SNAPSHOT.jar
 ```
+
 
 ## Notes
 

@@ -82,6 +82,40 @@ public class Graph {
 	}
 
 	/**
+	 * Recherche des arcs sortant d'un sommet
+	 * 
+	 * @param vertex
+	 * @return
+	 */
+	public List<Edge> getInEdges(Vertex vertex){
+		List<Edge> result = new ArrayList<>();
+		for (Edge candidate : edges) {
+			if (candidate.getTarget() != vertex) {
+				continue;
+			}
+			result.add(candidate);
+		}
+		return result;
+	}
+	
+	/**
+	 * Recherche des arcs sortant d'un sommet
+	 * 
+	 * @param vertex
+	 * @return
+	 */
+	public List<Edge> getOutEdges(Vertex vertex) {
+		List<Edge> result = new ArrayList<>();
+		for (Edge candidate : edges) {
+			if (candidate.getSource() != vertex) {
+				continue;
+			}
+			result.add(candidate);
+		}
+		return result;
+	}
+
+	/**
 	 * Définition de la liste des arcs
 	 * 
 	 * @param edges

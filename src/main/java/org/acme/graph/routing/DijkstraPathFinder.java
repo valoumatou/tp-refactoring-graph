@@ -35,17 +35,17 @@ public class DijkstraPathFinder {
 	 * @return
 	 */
 	public List<Edge> findPath(Vertex origin, Vertex destination) {
-		log.info("findPath({},{})...",origin,destination);
+		log.info("findPath({},{})...", origin, destination);
 		initGraph(origin);
 		Vertex current;
 		while ((current = findNextVertex()) != null) {
 			visit(current);
 			if (destination.getReachingEdge() != null) {
-				log.info("findPath({},{}) : path found",origin,destination);
+				log.info("findPath({},{}) : path found", origin, destination);
 				return buildPath(destination);
 			}
 		}
-		log.info("findPath({},{}) : path not found",origin,destination);
+		log.info("findPath({},{}) : path not found", origin, destination);
 		return null;
 	}
 
@@ -56,7 +56,7 @@ public class DijkstraPathFinder {
 	 */
 	private void visit(Vertex vertex) {
 		log.trace("visit({})", vertex);
-		List<Edge> outEdges = findOutEdges(vertex);
+		List<Edge> outEdges = graph.getOutEdges(vertex);
 		/*
 		 * On étudie chacun des arcs sortant pour atteindre de nouveaux sommets ou
 		 * mettre à jour des sommets déjà atteint si on trouve un meilleur coût
@@ -77,23 +77,6 @@ public class DijkstraPathFinder {
 		 * On marque le sommet comme visité
 		 */
 		vertex.setVisited(true);
-	}
-
-	/**
-	 * Recherche des arcs sortant d'un sommet
-	 * 
-	 * @param vertex
-	 * @return
-	 */
-	private List<Edge> findOutEdges(Vertex vertex) {
-		List<Edge> result = new ArrayList<Edge>();
-		for (Edge candidate : graph.getEdges()) {
-			if (candidate.getSource() != vertex) {
-				continue;
-			}
-			result.add(candidate);
-		}
-		return result;
 	}
 
 	/**
