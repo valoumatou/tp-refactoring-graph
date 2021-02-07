@@ -17,17 +17,10 @@ public class FindPathController {
 	@Autowired
 	private Graph graph;
 
-	@GetMapping("/")
-	public String hello() {
-		return "La documentation swagger de l'API devrait apparaître ici (voir springfox-swagger)...";
-	}
-
-	@GetMapping("/find-path")
+	@GetMapping(value = "/find-path")
 	public List<Edge> findPath(
-		@RequestParam(value = "origin", required = true)
-		String originId,
-		@RequestParam(value = "destination", required = true)
-		String destinationId
+		@RequestParam(value = "origin", required = true) String originId,
+		@RequestParam(value = "destination", required = true) String destinationId
 	) {
 		DijkstraPathFinder pathFinder = new DijkstraPathFinder(graph);
 		Vertex origin = graph.findVertex(originId);

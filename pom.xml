@@ -50,17 +50,11 @@
 			<version>${geotools.version}</version>
 		</dependency>
 
+		<!-- JTS et GeoJSON -->
 		<dependency>
-			<groupId>jdom</groupId>
-			<artifactId>jdom</artifactId>
-			<version>1.0</version>
-		</dependency>
-
-
-		<!-- jaxen (XPath) -->
-		<dependency>
-			<groupId>jaxen</groupId>
-			<artifactId>jaxen</artifactId>
+			<groupId>com.bedatadriven</groupId>
+			<artifactId>jackson-datatype-jts</artifactId>
+			<version>2.2</version>
 		</dependency>
 
 		<dependency>

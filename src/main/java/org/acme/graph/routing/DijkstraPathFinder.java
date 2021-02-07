@@ -86,7 +86,7 @@ public class DijkstraPathFinder {
 	 * @return
 	 */
 	private List<Edge> buildPath(Vertex target) {
-		List<Edge> result = new ArrayList<Edge>();
+		List<Edge> result = new ArrayList<>();
 
 		Edge current = target.getReachingEdge();
 		do {

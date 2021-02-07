@@ -55,6 +55,7 @@ public class Vertex {
 		this.coordinate = coordinate;
 	}
 
+	@JsonIgnore
 	public double getCost() {
 		return cost;
 	}

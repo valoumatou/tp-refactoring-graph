@@ -3,6 +3,7 @@ package org.acme.graph.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.acme.graph.errors.NotFoundException;
 import org.locationtech.jts.geom.Coordinate;
 
 /**
@@ -16,12 +17,12 @@ public class Graph {
 	/**
 	 * Liste des sommets
 	 */
-	private List<Vertex> vertices = new ArrayList<Vertex>();
+	private List<Vertex> vertices = new ArrayList<>();
 
 	/**
 	 * Liste des arcs
 	 */
-	private List<Edge> edges = new ArrayList<Edge>();
+	private List<Edge> edges = new ArrayList<>();
 
 	/**
 	 * Récupération de la liste sommets
@@ -53,11 +54,11 @@ public class Graph {
 				return vertex;
 			}
 		}
-		return null;
+		throw new NotFoundException(String.format("Vertex '%1s' not found", id));
 	}
 
 	/**
-	 * Recherche d'un sommet par coordonnées
+	 * Recherche d'un sommet par égalité stricte de coordonnées
 	 * 
 	 * @param coordinate
 	 * @return
@@ -69,7 +70,7 @@ public class Graph {
 				return vertex;
 			}
 		}
-		return null;
+		throw new NotFoundException(String.format("Vertex not found at [%1s,%2s]", coordinate.x, coordinate.y));
 	}
 
 	/**
@@ -87,7 +88,7 @@ public class Graph {
 	 * @param vertex
 	 * @return
 	 */
-	public List<Edge> getInEdges(Vertex vertex){
+	public List<Edge> getInEdges(Vertex vertex) {
 		List<Edge> result = new ArrayList<>();
 		for (Edge candidate : edges) {
 			if (candidate.getTarget() != vertex) {
@@ -97,7 +98,7 @@ public class Graph {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Recherche des arcs sortant d'un sommet
 	 * 

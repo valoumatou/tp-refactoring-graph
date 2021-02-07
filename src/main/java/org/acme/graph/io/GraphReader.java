@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.acme.graph.errors.NotFoundException;
 import org.acme.graph.model.Edge;
 import org.acme.graph.model.Graph;
 import org.acme.graph.model.Vertex;
@@ -28,6 +29,10 @@ import org.locationtech.jts.geom.MultiLineString;
  *
  */
 public class GraphReader {
+
+	private static final String DOUBLE_SENS = "Double sens";
+	private static final String SENS_DIRECT = "Sens direct";
+	private static final String SENS_INVERSE = "Sens inverse";
 
 	/**
 	 * Lecture du fichier shapefile
@@ -67,34 +72,41 @@ public class GraphReader {
 	}
 
 	/**
-	 * Création des arcs direct et inverse pour une feature correspondant
-	 * à un tronçon de route.
+	 * Création des arcs direct et inverse pour une feature correspondant à un
+	 * tronçon de route.
 	 * 
 	 * @param graph
 	 * @param feature
 	 */
 	public void createEdges(Graph graph, SimpleFeature feature) {
 		String id = feature.getID();
-		// String sens = (String)feature.getAttribute("SENS");
+
+		/* Récupération de la géométrie dans le sens direct */
 		LineString geometry = toLineString(feature);
 
 		/* Création ou récupération des sommets initiaux et finaux */
 		Vertex source = getOrCreateVertex(graph, geometry.getStartPoint().getCoordinate());
 		Vertex target = getOrCreateVertex(graph, geometry.getEndPoint().getCoordinate());
 
-		/* Création de l'arc pour le parcours en sens direct */
-		Edge directEdge = new Edge();
-		directEdge.setId(id + "-direct");
-		directEdge.setSource(source);
-		directEdge.setTarget(target);
-		graph.getEdges().add(directEdge);
+		/* Récupération du sens de circulation */
+		String sens = (String) feature.getAttribute("SENS");
 
-		/* Création de l'arc pour le parcours en sens opposé */
-		Edge reverseEdge = new Edge();
-		reverseEdge.setId(id + "-reverse");
-		reverseEdge.setSource(target);
-		reverseEdge.setTarget(source);
-		graph.getEdges().add(reverseEdge);
+		/* Création de l'arc pour le parcours en sens direct */
+		if (sens.equals(DOUBLE_SENS) || sens.equals(SENS_DIRECT)) {
+			Edge directEdge = new Edge();
+			directEdge.setId(id + "-direct");
+			directEdge.setSource(source);
+			directEdge.setTarget(target);
+			graph.getEdges().add(directEdge);
+		}
+		if (sens.equals(DOUBLE_SENS) || sens.equals(SENS_INVERSE)) {
+			/* Création de l'arc pour le parcours en sens opposé */
+			Edge reverseEdge = new Edge();
+			reverseEdge.setId(id + "-reverse");
+			reverseEdge.setSource(target);
+			reverseEdge.setTarget(source);
+			graph.getEdges().add(reverseEdge);
+		}
 	}
 
 	/**
@@ -105,8 +117,10 @@ public class GraphReader {
 	 * @return
 	 */
 	private static Vertex getOrCreateVertex(Graph graph, Coordinate coordinate) {
-		Vertex vertex = graph.findVertex(coordinate);
-		if (vertex == null) {
+		Vertex vertex;
+		try {
+			vertex = graph.findVertex(coordinate);
+		} catch (NotFoundException e) {
 			/* création d'un nouveau sommet car non trouvé */
 			vertex = new Vertex();
 			vertex.setId(Integer.toString(graph.getVertices().size()));

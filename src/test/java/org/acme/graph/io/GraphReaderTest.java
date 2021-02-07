@@ -60,7 +60,7 @@ public class GraphReaderTest {
 		}
 
 		assertEquals(19207, graph.getVertices().size());
-		assertEquals(49536, graph.getEdges().size());
+		assertEquals(44348, graph.getEdges().size());
 
 		{
 			Vertex v = graph.findVertex("1");
