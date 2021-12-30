@@ -24,7 +24,7 @@ public class GraphTest {
 	public void testFindVertexByIdNotFound() {
 		Graph g = TestGraphFactory.createGraph01();
 		NotFoundException e = Assert.assertThrows(NotFoundException.class, () -> g.findVertex("missing"));
-		assertEquals("Vertex 'missing' not found",e.getMessage());
+		assertEquals("Vertex 'missing' not found", e.getMessage());
 	}
 
 	@Test
@@ -40,7 +40,7 @@ public class GraphTest {
 		Graph g = TestGraphFactory.createGraph01();
 		Coordinate c = new Coordinate(888.0, 999.0);
 		NotFoundException e = Assert.assertThrows(NotFoundException.class, () -> g.findVertex(c));
-		assertEquals("Vertex not found at [888.0,999.0]",e.getMessage());
+		assertEquals("Vertex not found at [888.0,999.0]", e.getMessage());
 	}
 
 	@Test

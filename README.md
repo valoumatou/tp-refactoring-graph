@@ -22,6 +22,7 @@ Le code est organisé en package :
 * `routing` : Implémentation de l'algorithme de calcul de plus court chemin
 * `controllers` : Contrôleurs de l'application spring
 * `config` : Configuration de l'application spring (initialisation des beans)
+* `errors` : Gestion des erreurs (exceptions personnalisées)
 
 ## Utilisation
 
@@ -44,7 +45,7 @@ mvn clean package
 
 ## Données utilisées
 
-Un extrait de [ROUTE500](http://professionnels.ign.fr/route500) est présent dans `src/main/resources/route500/idf/troncon_route.shp` à des fins de tests. Il est intégré dans le jar et est chargé par défaut.
+Un extrait de [ROUTE500](https://files.opendatarchives.fr/professionnels.ign.fr/route500/) est présent dans `src/main/resources/route500/idf/troncon_route.shp` à des fins de tests. Il est intégré dans le jar et est chargé par défaut.
 
 Il est possible de charger un autre fichier à l'aide de l'option `graph.path` :
 
@@ -55,6 +56,6 @@ java -Dgraph.path=path/to/troncon_route.shp -jar target/tp-refactoring-graph-0.1
 ## Notes
 
 * Log en mode debug : `-Dlogging.level.org.acme.graph=DEBUG`.
-* Génération de rapport de couverture : `mvn clean package jacoco:report`.
+* Génération de rapport de couverture : `mvn clean package jacoco:report` (voir target/site/jacoco/index.html)
 * [VisualVM](https://visualvm.github.io/) pourra vous aider pour les optimisations.
 

@@ -9,9 +9,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
- * 
+ *
  * Un arc matérialisé par un sommet source et un sommet cible
- * 
+ *
  * @author MBorne
  *
  */
