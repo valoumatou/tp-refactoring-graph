@@ -1,7 +1,5 @@
 package org.acme.graph.model;
 
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
 
 import com.bedatadriven.jackson.datatype.jts.serialization.GeometrySerializer;
@@ -32,6 +30,11 @@ public class Edge {
 	 * Sommet final
 	 */
 	private Vertex target;
+
+	/**
+	 * Géométrie de l'arc
+	 */
+	private LineString geometry;
 
 	public Edge() {
 
@@ -86,11 +89,11 @@ public class Edge {
 
 	@JsonSerialize(using = GeometrySerializer.class)
 	public LineString getGeometry() {
-		GeometryFactory gf = new GeometryFactory();
-		return gf.createLineString(new Coordinate[] {
-			getSource().getCoordinate(),
-			getTarget().getCoordinate()
-		});
+		return geometry;
+	}
+
+	public void setGeometry(LineString geometry) {
+		this.geometry = geometry;
 	}
 
 	@Override

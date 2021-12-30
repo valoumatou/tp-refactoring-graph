@@ -1,6 +1,7 @@
 package org.acme.graph.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.acme.graph.errors.NotFoundException;
@@ -29,7 +30,7 @@ public class Graph {
 	 * 
 	 * @return
 	 */
-	public List<Vertex> getVertices() {
+	public Collection<Vertex> getVertices() {
 		return vertices;
 	}
 
@@ -74,11 +75,32 @@ public class Graph {
 	}
 
 	/**
+	 * Récupération ou création d'un sommet en assurant l'unicité
+	 * 
+	 * @param graph
+	 * @param coordinate
+	 * @return
+	 */
+	public Vertex getOrCreateVertex(Coordinate coordinate) {
+		Vertex vertex;
+		try {
+			vertex = findVertex(coordinate);
+		} catch (NotFoundException e) {
+			/* création d'un nouveau sommet car non trouvé */
+			vertex = new Vertex();
+			vertex.setId(Integer.toString(getVertices().size()));
+			vertex.setCoordinate(coordinate);
+			vertices.add(vertex);
+		}
+		return vertex;
+	}
+
+	/**
 	 * Récupération de la liste des arcs
 	 * 
 	 * @return
 	 */
-	public List<Edge> getEdges() {
+	public Collection<Edge> getEdges() {
 		return edges;
 	}
 

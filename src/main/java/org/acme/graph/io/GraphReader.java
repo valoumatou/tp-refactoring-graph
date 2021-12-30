@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.acme.graph.errors.NotFoundException;
 import org.acme.graph.model.Edge;
 import org.acme.graph.model.Graph;
 import org.acme.graph.model.Vertex;
@@ -13,14 +12,12 @@ import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
-import org.opengis.feature.simple.SimpleFeature;
-import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.filter.Filter;
-
-import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.MultiLineString;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.filter.Filter;
 
 /**
  * Lecture d'un fichier d'arc correspondant au modèle ROUTE500 de l'IGN
@@ -85,8 +82,8 @@ public class GraphReader {
 		LineString geometry = toLineString(feature);
 
 		/* Création ou récupération des sommets initiaux et finaux */
-		Vertex source = getOrCreateVertex(graph, geometry.getStartPoint().getCoordinate());
-		Vertex target = getOrCreateVertex(graph, geometry.getEndPoint().getCoordinate());
+		Vertex source = graph.getOrCreateVertex(geometry.getStartPoint().getCoordinate());
+		Vertex target = graph.getOrCreateVertex(geometry.getEndPoint().getCoordinate());
 
 		/* Récupération du sens de circulation */
 		String sens = (String) feature.getAttribute("SENS");
@@ -97,6 +94,7 @@ public class GraphReader {
 			directEdge.setId(id + "-direct");
 			directEdge.setSource(source);
 			directEdge.setTarget(target);
+			directEdge.setGeometry(geometry);
 			graph.getEdges().add(directEdge);
 		}
 		if (sens.equals(DOUBLE_SENS) || sens.equals(SENS_INVERSE)) {
@@ -105,29 +103,9 @@ public class GraphReader {
 			reverseEdge.setId(id + "-reverse");
 			reverseEdge.setSource(target);
 			reverseEdge.setTarget(source);
+			reverseEdge.setGeometry(geometry);
 			graph.getEdges().add(reverseEdge);
 		}
-	}
-
-	/**
-	 * Récupération ou création d'un sommet en assurant l'unicité
-	 * 
-	 * @param graph
-	 * @param coordinate
-	 * @return
-	 */
-	private static Vertex getOrCreateVertex(Graph graph, Coordinate coordinate) {
-		Vertex vertex;
-		try {
-			vertex = graph.findVertex(coordinate);
-		} catch (NotFoundException e) {
-			/* création d'un nouveau sommet car non trouvé */
-			vertex = new Vertex();
-			vertex.setId(Integer.toString(graph.getVertices().size()));
-			vertex.setCoordinate(coordinate);
-			graph.getVertices().add(vertex);
-		}
-		return vertex;
 	}
 
 	/**
