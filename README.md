@@ -2,8 +2,7 @@
 
 ## Description
 
-[tp-refactoring-graph](http://mborne.github.io/cours-patron-conception/annexe/tp-graph/index.html) associé au cours sur [les patrons de conception et principes de réfactoring](http://mborne.github.io/cours-patron-conception/).
-
+[tp-refactoring-graph](http://mborne.github.io/cours-patron-conception/annexe/tp-graph/index.html) associé au cours sur [les patrons de conception et principes de refactoring](http://mborne.github.io/cours-patron-conception/).
 
 ## Principes
 
