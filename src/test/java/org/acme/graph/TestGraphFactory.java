@@ -4,8 +4,6 @@ import org.acme.graph.model.Edge;
 import org.acme.graph.model.Graph;
 import org.acme.graph.model.Vertex;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.LineString;
 
 public class TestGraphFactory {
 
@@ -41,36 +39,21 @@ public class TestGraphFactory {
 		ab.setId("ab");
 		ab.setSource(a);
 		ab.setTarget(b);
-		ab.setGeometry(createLineString(a.getCoordinate(), b.getCoordinate()));
 		graph.getEdges().add(ab);
 
 		Edge bc = new Edge();
 		bc.setId("bc");
 		bc.setSource(b);
 		bc.setTarget(c);
-		bc.setGeometry(createLineString(b.getCoordinate(), c.getCoordinate()));
 		graph.getEdges().add(bc);
 
 		Edge ad = new Edge();
 		ad.setId("ad");
 		ad.setSource(a);
 		ad.setTarget(d);
-		ad.setGeometry(createLineString(a.getCoordinate(), d.getCoordinate()));
 		graph.getEdges().add(ad);
 
 		return graph;
-	}
-
-	/**
-	 * Création d'une polyligne à deux points.
-	 * 
-	 * @param startPoint
-	 * @param endPoint
-	 * @return
-	 */
-	private static LineString createLineString(Coordinate startPoint, Coordinate endPoint) {
-		GeometryFactory gf = new GeometryFactory();
-		return gf.createLineString(new Coordinate[] { startPoint, endPoint });
 	}
 
 }

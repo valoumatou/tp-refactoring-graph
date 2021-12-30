@@ -35,7 +35,7 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- Pour simplifier l'accès aux resources dans le jar https://stackoverflow.com/a/37202883 
+		<!-- Pour simplifier l'accès aux resources dans le jar https://stackoverflow.com/a/37202883
 			https://github.com/ulisesbocchio/spring-boot-jar-resources -->
 		<dependency>
 			<groupId>com.github.ulisesbocchio</groupId>

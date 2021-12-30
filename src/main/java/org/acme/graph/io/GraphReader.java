@@ -94,7 +94,6 @@ public class GraphReader {
 			directEdge.setId(id + "-direct");
 			directEdge.setSource(source);
 			directEdge.setTarget(target);
-			directEdge.setGeometry(geometry);
 			graph.getEdges().add(directEdge);
 		}
 		if (sens.equals(DOUBLE_SENS) || sens.equals(SENS_INVERSE)) {
@@ -103,7 +102,6 @@ public class GraphReader {
 			reverseEdge.setId(id + "-reverse");
 			reverseEdge.setSource(target);
 			reverseEdge.setTarget(source);
-			reverseEdge.setGeometry(geometry);
 			graph.getEdges().add(reverseEdge);
 		}
 	}
