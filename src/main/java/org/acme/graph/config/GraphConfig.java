@@ -33,15 +33,19 @@ public class GraphConfig {
 	private String path;
 
 	/**
-	 * Chargement du graphe configuré via la variable "graph.path"
-	 * dans le contexte spring
+	 * Chargement du graphe configuré via la variable "graph.path" dans le contexte
+	 * spring
 	 */
 	@Bean
 	public Graph graph() throws Exception {
 		File file = getGraphFile();
-		log.info("Chargement du graphe {}...", file);
-		Graph graph = GraphReader.read(file);
-		log.info("Chargement du graphe terminé ({} sommets, {} arcs)", 
+		log.info("Loading graph from {}...", file.getAbsolutePath());
+		long startTime = System.currentTimeMillis();
+		GraphReader reader = new GraphReader();
+		Graph graph = reader.read(file);
+		long endTime = System.currentTimeMillis();
+		log.info("Graph loaded in {} milliseconds (num_vertices={}, num_edges={})",
+			(endTime - startTime),
 			graph.getVertices().size(),
 			graph.getEdges().size()
 		);
@@ -50,7 +54,7 @@ public class GraphConfig {
 
 	/**
 	 * 
-	 * Récupération du fichier configuré via la variable "graph.path" avec 
+	 * Récupération du fichier configuré via la variable "graph.path" avec
 	 * traitement du cas où c'est une resource ou un fichier externe au jar
 	 * 
 	 * @return

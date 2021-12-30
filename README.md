@@ -2,8 +2,7 @@
 
 ## Description
 
-[tp-refactoring-graph](http://mborne.github.io/cours-patron-conception/annexe/tp-graph/index.html) associé au cours sur [les patrons de conception et principe de réfactoring](http://mborne.github.io/cours-patron-conception/).
-
+[tp-refactoring-graph](http://mborne.github.io/cours-patron-conception/annexe/tp-graph/index.html) associé au cours sur [les patrons de conception et principes de refactoring](http://mborne.github.io/cours-patron-conception/).
 
 ## Principes
 
@@ -13,60 +12,49 @@
 
 ## Organisation du code
 
-Le projet contient deux points d'entrée :
-
-* `cli.FindPath` : Calcul de plus court chemin en ligne de commande (CLI = *Command Line Interpreter*)
-* `Application` : Application sous forme d'une API springboot
+La classe [Application](src/main/java/org/acme/graph/Application.java) est le point d'entrée de l'application. La méthode `main` assure le démarrage de l'API implémentée à l'aide de [spring-boot](https://spring.io/guides/gs/spring-boot/).
 
 Le code est organisé en package :
 
 * `model` : Modélisation des données de l'application
-* ̀`io` : Lecture de graphe dans différents formats (entrées/sorties)
+* ̀`io` : Lecture de graphes
 * `routing` : Implémentation de l'algorithme de calcul de plus court chemin
-* `controllers` : Contrôleurs de l'application springboot
-* `config` : Configuration de l'application springboot (initialisation des beans)
-
-## Remarque
-
-Un extrait de [ROUTE500](http://professionnels.ign.fr/route500) est présent dans `src/test/resources/idf/troncon_route.shp` à des fins de tests.
+* `controllers` : Contrôleurs de l'application spring
+* `config` : Configuration de l'application spring (initialisation des beans)
+* `errors` : Gestion des erreurs (exceptions personnalisées)
 
 ## Utilisation
 
-### En mode ligne CLI
+### Avec eclipse
 
-Lancer l'application `cli.FindPath` dans eclipse.
+* Lancer l'application "Application.java".
+* Ouvrir http://localhost:8080/find-path?origin=1&destination=9557 dans un navigateur
 
-### En mode API
+### En ligne de commande
 
-1) Construire le jar :
+* Construire le jar : `mvn clean package`
 
 ```bash
 mvn clean package
 ```
 
-2) Démarrer l'API
+* Démarrer l'API : `mvn spring-boot:run`
+
+* Tester l'API : `curl "http://localhost:8080/find-path?origin=1&destination=9557"`
+
+## Données utilisées
+
+Un extrait de [ROUTE500](https://files.opendatarchives.fr/professionnels.ign.fr/route500/) est présent dans `src/main/resources/route500/idf/troncon_route.shp` à des fins de tests. Il est intégré dans le jar et est chargé par défaut.
+
+Il est possible de charger un autre fichier à l'aide de l'option `graph.path` :
 
 ```bash
-# Option 1 : Charger le graphe de démonstration
-java -cp target -jar target/tp-refactoring-graph-0.1.0-SNAPSHOT.jar
-# -> ouvrir http://localhost:8080/find-path?origin=a&destination=c
-
-# Option 2 : Charger l'extrait ROUTE500
-java -Dgraph.path=src/test/resources/route500/idf/troncon_route.shp -jar target/tp-refactoring-graph-0.1.0-SNAPSHOT.jar
-# -> Ouvrir http://localhost:8080/find-path?origin=1&destination=1000
-```
-
-
-### En mode API sous eclipse
-
-Lancer "Application.java" par exemple avec les paramètres suivant dans "VM Arguments" :
-
-```bash
--Dgraph.path=${project_loc}/src/test/resources/route500/idf/troncon_route.shp
+java -Dgraph.path=path/to/troncon_route.shp -jar target/tp-refactoring-graph-0.1.0-SNAPSHOT.jar
 ```
 
 ## Notes
 
-* Log en mode debug : `-Dlogging.level.org.acme.graph=DEBUG`
-* [VisualVM](https://visualvm.github.io/) pourra vous aider
+* Log en mode debug : `-Dlogging.level.org.acme.graph=DEBUG`.
+* Génération de rapport de couverture : `mvn clean package jacoco:report` (voir target/site/jacoco/index.html)
+* [VisualVM](https://visualvm.github.io/) pourra vous aider pour les optimisations.
 

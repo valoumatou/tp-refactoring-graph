@@ -8,7 +8,7 @@ import com.github.ulisesbocchio.jar.resources.JarResourceLoader;
 /**
  * Application spring permettant de démarrer l'API
  * 
- * http://localhost:8080/find-path?origin=a&destination=b
+ * http://localhost:8080/find-path?origin=1&destination=9557
  * 
  * @author MBorne
  */
@@ -16,19 +16,11 @@ import com.github.ulisesbocchio.jar.resources.JarResourceLoader;
 public class Application {
 
 	/**
-	 * ${project_loc}/src/test/resources/graph/route500/idf/troncon_route.shp
-	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		/*
-		 * Démarrage classique d'une application spring modifié pour faciliter le
-		 * chargement des ressources à partir du jar
-		 */
-		// SpringApplication.run(Application.class, args);
-
-		/*
-		 * Permet d'accéder facilement aux resources en mode jar
+		 * Permet d'accéder facilement aux resources en mode jar.
 		 * 
 		 * @see https://stackoverflow.com/a/37202883
 		 */

@@ -7,7 +7,7 @@ import org.acme.graph.model.Graph;
 import org.acme.graph.model.Vertex;
 import org.acme.graph.routing.DijkstraPathFinder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,12 +17,7 @@ public class FindPathController {
 	@Autowired
 	private Graph graph;
 
-	@RequestMapping("/")
-	public String hello() {
-		return "La documentation swagger de l'API devrait apparaître ici (voir springfox-swagger)...";
-	}
-
-	@RequestMapping("/find-path")
+	@GetMapping(value = "/find-path")
 	public List<Edge> findPath(
 		@RequestParam(value = "origin", required = true)
 		String originId,
