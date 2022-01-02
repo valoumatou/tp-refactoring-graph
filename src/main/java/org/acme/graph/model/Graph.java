@@ -55,7 +55,7 @@ public class Graph {
 				return vertex;
 			}
 		}
-		throw new NotFoundException(String.format("Vertex '%1s' not found", id));
+		throw new NotFoundException(String.format("Vertex '%s' not found", id));
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class Graph {
 				return vertex;
 			}
 		}
-		throw new NotFoundException(String.format("Vertex not found at [%1s,%2s]", coordinate.x, coordinate.y));
+		throw new NotFoundException(String.format("Vertex not found at [%s,%s]", coordinate.x, coordinate.y));
 	}
 
 	/**
