@@ -30,12 +30,7 @@ public class GraphReader {
 	private static final String SENS_DIRECT = "Sens direct";
 	private static final String SENS_INVERSE = "Sens inverse";
 
-	/**
-	 * Lecture du fichier shapefile
-	 * 
-	 * @param file
-	 * @return
-	 */
+
 	public Graph read(File file) throws Exception {
 		Graph graph = new Graph();
 
@@ -67,13 +62,6 @@ public class GraphReader {
 		return graph;
 	}
 
-	/**
-	 * Création des arcs direct et inverse pour une feature correspondant à un
-	 * tronçon de route.
-	 * 
-	 * @param graph
-	 * @param feature
-	 */
 	public void createEdges(Graph graph, SimpleFeature feature) {
 		String id = feature.getID();
 
@@ -97,12 +85,6 @@ public class GraphReader {
 		}
 	}
 
-	/**
-	 * Récupération de la géométrie de l'arc à partir de la feature
-	 * 
-	 * @param feature
-	 * @return
-	 */
 	private static LineString toLineString(SimpleFeature feature) {
 		Geometry geometry = (Geometry) feature.getDefaultGeometryProperty().getValue();
 		if (geometry instanceof LineString) {

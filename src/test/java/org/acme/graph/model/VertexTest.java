@@ -1,17 +1,89 @@
 package org.acme.graph.model;
 
-import org.junit.Assert;
-import org.junit.Test;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.locationtech.jts.geom.Coordinate;
 
-public class VertexTest {
+/**
+ * 
+ * Un sommet dans un graphe
+ * 
+ * @author MBorne
+ *
+ */
+public class Vertex {
 
-    @Test
-	public void defaultTestConstructor(){
+	/**
+	 * Identifiant du sommet
+	 */
+	private String id;
 
-        Vertex v = new Vertex(new Coordinate(1.0, 1.0), "1");
-        
-		Assert.assertEquals("1", v.getId());
-	} 
-    
+	/**
+	 * Position du sommet
+	 */
+	private Coordinate coordinate;
+
+	/**
+	 * dijkstra - coût pour atteindre le sommet
+	 */
+	private double cost;
+	/**
+	 * dijkstra - arc entrant avec le meilleur coût
+	 */
+	private Edge reachingEdge;
+	/**
+	 * dijkstra - indique si le sommet est visité
+	 */
+	private boolean visited;
+
+	Vertex() {
+
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Coordinate getCoordinate() {
+		return coordinate;
+	}
+
+	public void setCoordinate(Coordinate coordinate) {
+		this.coordinate = coordinate;
+	}
+
+	@JsonIgnore
+	public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+
+	@JsonIgnore
+	public Edge getReachingEdge() {
+		return reachingEdge;
+	}
+
+	public void setReachingEdge(Edge reachingEdge) {
+		this.reachingEdge = reachingEdge;
+	}
+
+	public boolean isVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean visited) {
+		this.visited = visited;
+	}
+
+	@Override
+	public String toString() {
+		return id;
+	}
+
 }

@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.acme.graph.errors.NotFoundException;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Coordinate;
 
 /**
  * 
@@ -33,15 +32,6 @@ public class Graph {
 	 */
 	public Collection<Vertex> getVertices() {
 		return vertices;
-	}
-
-	/**
-	 * Récupération de la liste arcs
-	 * 
-	 * @return
-	 */
-	public void setVertices(List<Vertex> vertices) {
-		this.vertices = vertices;
 	}
 
 	/**
@@ -87,9 +77,8 @@ public class Graph {
 		try {
 			vertex = findVertex(coordinate);
 		} catch (NotFoundException e) {
-			String id = Integer.toString(getVertices().size());
-			vertex = new Vertex(coordinate, id);
-			vertices.add(vertex);
+			/* création d'un nouveau sommet car non trouvé */
+			vertex = createVertex(coordinate, Integer.toString(getVertices().size()));
 		}
 		return vertex;
 	}
@@ -137,26 +126,20 @@ public class Graph {
 		return result;
 	}
 
-	public void setEdges(List<Edge> edges) {
-		this.edges = edges;
-	}
-
 	public Vertex createVertex(Coordinate coordinate, String id) {
-
-		Vertex vertex = new Vertex(coordinate, id);
-		this.vertices.add(vertex);
-
+		Vertex vertex = new Vertex();
+		vertex.setId(id);
+		vertex.setCoordinate(coordinate);
+		vertices.add(vertex);
 		return vertex;
 	}
 
-
 	public Edge createEdge(Vertex source, Vertex target, String id) {
-
 		Edge edge = new Edge(source, target);
 		edge.setId(id);
+		edge.setGeometry(edge.getGeometry());
 		this.edges.add(edge);
 
 		return edge;
 	}
-
 }
